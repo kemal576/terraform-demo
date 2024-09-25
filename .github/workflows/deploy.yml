@@ -28,15 +28,15 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t BasicWebAPI:latest .
+          docker build -t basic_web_api:latest .
 
       - name: Tag Docker Image
         run: |
-          docker tag BasicWebAPI:latest ${{ secrets.DOCKER_HUB_USERNAME }}/BasicWebAPI:latest
+          docker tag basic_web_api:latest ${{ secrets.DOCKER_HUB_USERNAME }}/basic_web_api:latest
 
       - name: Push Docker Image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/BasicWebAPI:latest
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/basic_web_api:latest
 
       - name: Connect to EC2 and Deploy
         uses: appleboy/ssh-action@master
@@ -45,9 +45,9 @@ jobs:
           username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            docker stop BasicWebAPI || true
-            docker rm BasicWebAPI || true
+            docker stop basic_web_api || true
+            docker rm basic_web_api || true
             
-            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/BasicWebAPI:latest
+            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/basic_web_api:latest
             
-            docker run -d --name BasicWebAPI -p 8080:8080 -p 8081:8081 ${{ secrets.DOCKER_HUB_USERNAME }}/BasicWebAPI:latest
+            docker run -d --name basic_web_api -p 8080:8080 -p 8081:8081 ${{ secrets.DOCKER_HUB_USERNAME }}/basic_web_api:latest
