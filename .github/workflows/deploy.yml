@@ -28,7 +28,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t basic_web_api:latest .
+          docker build -f ../../BasicWebAPI/Dockerfile -t basic_web_api:latest .
 
       - name: Tag Docker Image
         run: |
