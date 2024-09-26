@@ -16,7 +16,7 @@ provider "aws" {
 resource "aws_instance" "app_server" {
   ami           = "ami-00f07845aed8c0ee7"
   instance_type = "t2.micro"
-  key_name      = "EC2_KEY"  # EC2 SSH key's name on aws
+  key_name      = "EC2_KEY" # EC2 SSH key's name on aws
 
   user_data = var.docker_installation_script
 
@@ -35,21 +35,21 @@ resource "aws_security_group" "app_server_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # SSH için tüm IP'lere izin ver
+    cidr_blocks = ["0.0.0.0/0"] # SSH için tüm IP'lere izin ver
   }
 
   ingress {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # HTTP için tüm IP'lere izin ver
+    cidr_blocks = ["0.0.0.0/0"] # HTTP için tüm IP'lere izin ver
   }
 
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]  # Dışa çıkış trafiğine tüm portlardan izin ver
+    cidr_blocks = ["0.0.0.0/0"] # Dışa çıkış trafiğine tüm portlardan izin ver
   }
 }
 
